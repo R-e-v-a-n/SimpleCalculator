@@ -15,57 +15,57 @@ import java.text.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText editDisplayHint;
-    EditText editDisplay;
+    private EditText editDisplayHint;
+    private EditText editDisplay;
 
-    Button negate;
-    Button clear;
-    Button allClear;
-    ImageButton backspace;
+    private Button negate;
+    private Button clear;
+    private Button allClear;
+    private ImageButton backspace;
 
-    Button seven;
-    Button eight;
-    Button nine;
-    Button division;
-    Button four;
-    Button five;
-    Button six;
-    Button multiply;
-    Button one;
-    Button two;
-    Button three;
-    Button subtract;
-    Button decimal;
-    Button zero;
-    Button equals;
-    Button addition;
+    private Button seven;
+    private Button eight;
+    private Button nine;
+    private Button division;
+    private Button four;
+    private Button five;
+    private Button six;
+    private Button multiply;
+    private Button one;
+    private Button two;
+    private Button three;
+    private Button subtract;
+    private Button decimal;
+    private Button zero;
+    private Button equals;
+    private Button addition;
 
-    ArrayList<Double> result = new ArrayList<Double>();
+    ArrayList<Double> result = new ArrayList<>();
 
-    double number1;
-    double number2;
+    private double number1;
+    private double number2;
 
-    int currentOperation = 0;
-    int nextOperation;
+    private int currentOperation = 0;
+    private int nextOperation;
 
-    final static int ADD      = 1;
-    final static int SUBTRACT = 2;
-    final static int MULTIPLY = 3;
-    final static int DIVISION = 4;
-    final static int EVAL     = 5;
+    private final static int ADD      = 1;
+    private final static int SUBTRACT = 2;
+    private final static int MULTIPLY = 3;
+    private final static int DIVISION = 4;
+    private final static int EVAL     = 5;
 
-    final static String[] OPERATORS_STRING = {" ", "+", "-", "*", "÷"};
+    private final static String[] OPERATORS_STRING = {" ", "+", "-", "*", "÷"};
 
-    final static int DONT_CLEAR = 0;
-    final static int CLEAR      = 1;
+    private final static int DONT_CLEAR = 0;
+    private final static int CLEAR      = 1;
 
-    int clearEditDisplay = CLEAR;
+    private int clearEditDisplay = CLEAR;
 
-    final static String FORMAT_PATTERN = "#0.####";
-    DecimalFormat formatter;
+    private final static String FORMAT_PATTERN = "#0.####";
+    private DecimalFormat formatter;
 
-    public static final String APP_PREFERENCES = "MySettings";
-    public static final String APP_PREFERENCES_RESULT = "Result";
+    private static final String APP_PREFERENCES = "MySettings";
+    private static final String APP_PREFERENCES_RESULT = "Result";
 
     @Override
     protected void onStop(){
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(APP_PREFERENCES,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(APP_PREFERENCES_RESULT, res);
-        editor.commit();
+        editor.apply();
     }
 
     @Override
@@ -124,20 +124,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void registerListeners() {
+    private void registerListeners() {
         negate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                try{
-                    number1 = Double.parseDouble(editDisplay.getText().toString());
-                }
-                catch (Exception e){
-                    return;
-                }
-                if (number1 == 0) { return; }
+                if (!tryGetValue() || (number1 == 0)) { return; }
                 editDisplay.setText(formatter.format(-1 * number1));
-                clearEditDisplay = DONT_CLEAR;
             }
         });
 
@@ -319,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e){
             return false;
         }
-        return true;
+        return !(Double.isNaN(number1) || Double.isInfinite(number1));
     }
 
     private void doAppendNumber(Integer number){
