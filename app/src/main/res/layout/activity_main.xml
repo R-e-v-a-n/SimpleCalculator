@@ -18,19 +18,20 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText1"
-            android:enabled="true" android:textAlignment="textEnd"
+            android:enabled="true"
             android:editable="false" android:textIsSelectable="false"
             android:singleLine="true"
             android:textSize="24sp"
-            android:inputType="none" android:background="#000000"/>
+            android:inputType="none" android:background="#000000" android:gravity="right|center_vertical"
+    />
     <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
-            android:enabled="true" android:text="0" android:textAlignment="textEnd"
+            android:enabled="true" android:text="0"
             android:singleLine="true" android:editable="false" android:textIsSelectable="false"
             android:textSize="32sp"
-            android:inputType="none" android:background="#000000"/>
+            android:inputType="none" android:background="#000000" android:gravity="right|center_vertical"/>
 
     <TableLayout
                 android:layout_width="fill_parent"
